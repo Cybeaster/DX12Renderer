@@ -123,34 +123,19 @@ float3 ComputeNormalMaps(float3 NormalW, float3 TangentW, MaterialData matData, 
 	float3 bumpedNormalW = NormalW;
 	float4 normalMapSample = float4(0.f, 0.f, 1.0f, 1.0f);
 	NormalMapSampleA = 1.0f;
-	if (IsTangentValid(TangentW))
-	{
+
 		uint numNormalMaps = matData.NormalMapCount;
 		for (uint i = 0; i < numNormalMaps; ++i)
 		{
 			int normalMapIndex = matData.NormalMapIndex[i];
 			normalMapSample = gTextureMaps[normalMapIndex].Sample(gsamAnisotropicWrap, TexC);
-			bumpedNormalW = NormalSampleToWorldSpace(normalMapSample.rgb, NormalW, TangentW);
+			bumpedNormalW *= NormalSampleToWorldSpace(normalMapSample.rgb, NormalW, TangentW);
 			NormalMapSampleA *= normalMapSample.a;
 		}
-	}
+
 	return bumpedNormalW;
 }
 
-float3 ComputeNormalMap(uint Index, float3 NormalW, float3 TangentW, MaterialData matData, float2 TexC, out float NormalMapSampleA)
-{
-	float3 bumpedNormalW = NormalW;
-	float4 normalMapSample = float4(0.f, 0.f, 1.0f, 1.0f);
-	NormalMapSampleA = 1.0f;
-	if (IsTangentValid(TangentW))
-	{
-		int normalMapIndex = matData.NormalMapIndex[Index];
-		normalMapSample = gTextureMaps[normalMapIndex].Sample(gsamAnisotropicWrap, TexC);
-		bumpedNormalW = NormalSampleToWorldSpace(normalMapSample.rgb, NormalW, TangentW);
-		NormalMapSampleA = normalMapSample.a;
-	}
-	return bumpedNormalW;
-}
 
 float3 ComputeHeightMaps(MaterialData matData, float3 NormalW, float3 TangentW, float2 TexC, inout float3 PosW)
 {
