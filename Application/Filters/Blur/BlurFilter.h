@@ -46,10 +46,6 @@ public:
 		Sigma = InSigma;
 		BlurCount = InBlurCount;
 	}
-	string GetName() override
-	{
-		return "BlurFilter";
-	}
 
 private:
 	vector<float> CalcGaussWeights(float Sigma) const;

@@ -35,6 +35,7 @@ public:
 	void SetAppPaused(bool bPaused);
 	string GetConfigPath(const string& Key) const;
 	wstring GetResourcePath(const wstring& Resource) const;
+	const wstring&  GetShadersFolder() const;
 private:
 	OApplication();
 	void InitWindowClass() const;

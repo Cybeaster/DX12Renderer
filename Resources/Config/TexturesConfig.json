@@ -3,227 +3,272 @@
     {
       "Name": "bricks2",
       "Path": "Resources\/Textures\/bricks2.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "upbody_norm",
       "Path": "Resources\/Textures\/upbody_norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Normal"
     },
     {
       "Name": "bricks",
       "Path": "Resources\/Textures\/bricks.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Diffuse"
     },
     {
       "Name": "bricks_nmap",
       "Path": "Resources\/Textures\/bricks_nmap.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Normal"
     },
     {
       "Name": "WoodCrate01",
       "Path": "Resources\/Textures\/WoodCrate01.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "bricks3",
       "Path": "Resources\/Textures\/bricks3.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "ice",
       "Path": "Resources\/Textures\/ice.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "bricks2_nmap",
       "Path": "Resources\/Textures\/bricks2_nmap.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "checkboard",
       "Path": "Resources\/Textures\/checkboard.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "grasscube1024",
       "Path": "Resources\/Textures\/grasscube1024.dds",
-      "ViewDimensions": "TextureCube"
+      "ViewDimensions": "TextureCube",
+      "Type" : "Diffuse"
     },
     {
       "Name": "default_nmap",
       "Path": "Resources\/Textures\/default_nmap.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "desertcube1024",
       "Path": "Resources\/Textures\/desertcube1024.dds",
-      "ViewDimensions": "TextureCube"
+      "ViewDimensions": "TextureCube",
+      "Type" : "Diffuse"
     },
     {
       "Name": "Fireball",
       "Path": "Resources\/Textures\/Fireball.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "grass",
       "Path": "Resources\/Textures\/grass.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "water1",
       "Path": "Resources\/Textures\/water1.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "head_diff",
       "Path": "Resources\/Textures\/head_diff.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "stone",
       "Path": "Resources\/Textures\/stone.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "head_norm",
       "Path": "Resources\/Textures\/head_norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "tree01S",
       "Path": "Resources\/Textures\/tree01S.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "jacket_diff",
       "Path": "Resources\/Textures\/jacket_diff.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "jacket_norm",
       "Path": "Resources\/Textures\/jacket_norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "pants_diff",
       "Path": "Resources\/Textures\/pants_diff.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "pants_norm",
       "Path": "Resources\/Textures\/pants_norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "snowcube1024",
       "Path": "Resources\/Textures\/snowcube1024.dds",
-      "ViewDimensions": "TextureCube"
+      "ViewDimensions": "TextureCube",
+      "Type" : "Diffuse"
     },
     {
       "Name": "sunsetcube1024",
       "Path": "Resources\/Textures\/sunsetcube1024.dds",
-      "ViewDimensions": "TextureCube"
+      "ViewDimensions": "TextureCube",
+      "Type" : "Diffuse"
     },
     {
       "Name": "tile",
       "Path": "Resources\/Textures\/tile.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "tile_nmap",
       "Path": "Resources\/Textures\/tile_nmap.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "tree02S",
       "Path": "Resources\/Textures\/tree02S.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "tree35S",
       "Path": "Resources\/Textures\/tree35S.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "upBody_diff",
       "Path": "Resources\/Textures\/upBody_diff.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "treearray",
       "Path": "Resources\/Textures\/treearray.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "treeArray2",
       "Path": "Resources\/Textures\/treeArray2.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "white1x1",
       "Path": "Resources/Textures/white1x1.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "WireFence",
       "Path": "Resources/Textures/WireFence.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "WoodCrate02",
       "Path": "Resources/Textures/WoodCrate02.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "Water002Diff",
       "Path": "Resources/Textures/Water/Water002Diff.dds",
-        "ViewDimensions": "Texture2D"
+        "ViewDimensions": "Texture2D",
+      "Type" : "Diffuse"
     },
     {
       "Name": "Water002Disp",
       "Path": "Resources/Textures/Water/Water002Disp.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Height"
     },
     {
       "Name": "Water002Norm",
       "Path": "Resources/Textures/Water/Water002Norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "Water002OCC",
       "Path": "Resources/Textures/Water/Water002OCC.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Occlusion"
     },
     {
       "Name": "Water002Rough",
       "Path": "Resources/Textures/Water/Water002Rough.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Roughness"
     },
     {
       "Name": "Water001Diff",
       "Path": "Resources/Textures/Water/Water001Diff.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Diffuse"
     },
     {
       "Name": "Water001Disp",
       "Path": "Resources/Textures/Water/Water001Disp.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Height"
     },
     {
       "Name": "Water001Norm",
       "Path": "Resources/Textures/Water/Water001Norm.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Normal"
     },
     {
       "Name": "Water001Occ",
       "Path": "Resources/Textures/Water/Water001Occ.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Occlusion"
     },
     {
       "Name": "Water001Rough",
       "Path": "Resources/Textures/Water/Water001Rough.dds",
-      "ViewDimensions": "Texture2D"
+      "ViewDimensions": "Texture2D",
+        "Type" : "Roughness"
     }
   ]
 }

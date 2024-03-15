@@ -8,7 +8,7 @@
 
 class OCommandQueue;
 class OEngine;
-class OTextureManager
+class OTextureManager : public IRenderObject
 {
 public:
 	using TTexturesMap = std::unordered_map<string, unique_ptr<STexture>>;
@@ -27,13 +27,14 @@ public:
 	uint32_t GetNumTextures() const { return Textures.size(); }
 	void LoadLocalTextures();
 	void SaveLocalTextures();
-
+	wstring GetName() override;
 private:
 	void AddTexture(unique_ptr<STexture> Texture);
 	void RemoveAllTextures();
 	void RemoveTexture(const string& Name);
 	void RemoveTexture(const wstring& Path);
-
+private:
+	wstring Name = L"TextureManager";
 	unique_ptr<OTexturesParser> Parser;
 	ID3D12Device* Device;
 	OCommandQueue* CommandQueue;

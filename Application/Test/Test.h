@@ -31,7 +31,7 @@ public:
 	{
 	}
 
-	virtual void OnRender(const UpdateEventArgs& Arg) = 0;
+	virtual void OnRender(const UpdateEventArgs& Arg) {};
 
 	virtual void OnWindowDestroyed();
 

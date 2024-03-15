@@ -29,6 +29,8 @@ public:
 	void ResourceBarrier(ORenderTargetBase* Resource, D3D12_RESOURCE_STATES StateBefore, D3D12_RESOURCE_STATES StateAfter) const;
 	void ResourceBarrier(ORenderTargetBase* Resource, D3D12_RESOURCE_STATES StateAfter) const;
 
+	void ResourceBarrier(SResourceInfo* Resource, D3D12_RESOURCE_STATES StateAfter) const;
+
 	void CopyResourceTo(ORenderTargetBase* Dest, ORenderTargetBase* Src) const;
 	ORenderTargetBase* SetRenderTarget(ORenderTargetBase* RenderTarget, uint32_t Subtarget = 0);
 	void ResetQueueState();

@@ -29,8 +29,12 @@ void OTextureManager::LoadLocalTextures()
 		THROW_IF_FAILED(DirectX::CreateDDSTextureFromFile12(Device,
 		                                                    CommandQueue->GetCommandList().Get(),
 		                                                    OApplication::Get()->GetResourcePath(texture->FileName).c_str(),
-		                                                    texture->Resource,
-		                                                    texture->UploadHeap));
+		                                                    texture->Resource.Resource,
+		                                                    texture->UploadHeap.Resource));
+		texture->Resource.Init(this,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+		texture->Resource.Resource->SetName(texture->FileName.c_str());
+
+			CommandQueue->ResourceBarrier(&texture->Resource, D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE);
 		LOG(Engine, Log, "Texture created from config: Name : {}, Path: {}", TEXT(texture->Name), texture->FileName);
 		AddTexture(make_unique<STexture>(*texture));
 	}
@@ -52,6 +56,11 @@ void OTextureManager::SaveLocalTextures()
 		textures.push_back(texture.get());
 	}
 	Parser->AddTextures(textures);
+}
+
+wstring OTextureManager::GetName()
+{
+	return Name;
 }
 
 void OTextureManager::AddTexture(unique_ptr<STexture> Texture)
@@ -108,8 +117,14 @@ STexture* OTextureManager::CreateTexture(string Name, wstring FileName)
 	THROW_IF_FAILED(DirectX::CreateDDSTextureFromFile12(Device,
 	                                                    CommandQueue->GetCommandList().Get(),
 	                                                    texture->FileName.c_str(),
-	                                                    texture->Resource,
-	                                                    texture->UploadHeap));
+	                                                    texture->Resource.Resource,
+	                                                    texture->UploadHeap.Resource));
+	texture->Resource.Init(this,D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	if (texture->Type == ETextureType::Height)
+	{
+		CommandQueue->ResourceBarrier(&texture->Resource, D3D12_RESOURCE_STATE_ALL_SHADER_RESOURCE);
+	}
+
 	LOG(Engine, Log, "Texture created: Name : {}, Path: {}", TEXT(Name), FileName);
 
 	auto result = texture.get();

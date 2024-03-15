@@ -137,13 +137,13 @@ float3 ComputeNormalMaps(float3 NormalW, float3 TangentW, MaterialData matData, 
 }
 
 
-float3 ComputeHeightMaps(MaterialData matData, float3 NormalW, float3 TangentW, float2 TexC, inout float3 PosW)
+float3 ComputeHeightMaps(MaterialData matData, float3 NormalW, float3 TangentW, float2 TexC, float3 PosW)
 {
 	uint numHeightMaps = matData.HeightMapCount;
 	for (uint j = 0; j < numHeightMaps; ++j)
 	{
 		int heightMapIndex = matData.HeightMapIndex[j];
-		float heightMapSample = gTextureMaps[heightMapIndex].Sample(gsamLinearClamp, TexC).r;
+		float heightMapSample = gTextureMaps[heightMapIndex].SampleLevel(gsamLinearClamp, TexC,1.0).r;
 		PosW += NormalW * heightMapSample;
 	}
 	return PosW;

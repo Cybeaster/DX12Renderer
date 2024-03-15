@@ -161,12 +161,12 @@ void Utils::ResourceBarrier(ID3D12GraphicsCommandList* List, SResourceInfo* Reso
 
 	if (localBefore != Before)
 	{
-		LOG(Debug, Warning, "ResourceBarrier: Resource state mismatch on resource {}!", TEXT(Resource->Context->GetName()));
+		LOG(Debug, Warning, "ResourceBarrier: Resource state mismatch on resource {}!", Resource->Context->GetName());
 	}
 
 	if (localBefore == After)
 	{
-		LOG(Debug, Warning, "ResourceBarrier: Resource states must be different {}!", TEXT(Resource->Context->GetName()));
+		LOG(Debug, Warning, "ResourceBarrier: Resource states must be different {}!", Resource->Context->GetName());
 		return;
 	}
 	Resource->CurrentState = After;
@@ -179,10 +179,10 @@ void Utils::ResourceBarrier(ID3D12GraphicsCommandList* List, SResourceInfo* Reso
 {
 	if (Resource->CurrentState == After)
 	{
-		LOG(Debug, Warning, "ResourceBarrier: Resource states must be different {}!", TEXT(Resource->Context->GetName()));
+		LOG(Debug, Warning, "ResourceBarrier: Resource states must be different {}!", Resource->Context->GetName());
 		return;
 	}
-	LOG(Debug, Log, "ResourceBarrier: Transitioning resource {}", TEXT(Resource->Context->GetName()));
+	LOG(Debug, Log, "ResourceBarrier: Transitioning resource {}", Resource->Context->GetName());
 	const auto barrier = CD3DX12_RESOURCE_BARRIER::Transition(Resource->Resource.Get(), Resource->CurrentState, After);
 	Resource->CurrentState = After;
 	List->ResourceBarrier(1, &barrier);
@@ -270,6 +270,7 @@ SResourceInfo Utils::CreateResource(IRenderObject* Owner, ID3D12Device* Device, 
 	                                                InitialState,
 	                                                ClearValue,
 	                                                IID_PPV_ARGS(&info.Resource)));
+	info.Resource->SetName(Owner->GetName().c_str());
 	return info;
 }
 SResourceInfo Utils::CreateResource(IRenderObject* Owner, ID3D12Device* Device, D3D12_HEAP_TYPE HeapProperties, const D3D12_RESOURCE_DESC& Desc, D3D12_RESOURCE_STATES InitialState, ID3D12GraphicsCommandList* CMDList, const D3D12_CLEAR_VALUE* ClearValue)

@@ -1,6 +1,7 @@
 
 #include "CubeMapTest.h"
 
+#include "Application.h"
 #include "EngineHelper.h"
 #include "Geometry/GPUWave/GpuWave.h"
 #include "Window/Window.h"
@@ -8,15 +9,7 @@
 bool OCubeMapTest::Initialize()
 {
 	OEngine::Get()->BuildCubeRenderTarget({ 0, 2, 0 });
-	auto queue = OEngine::Get()->GetCommandQueue();
-	Waves = OEngine::Get()->BuildRenderObject<OGPUWave>(OEngine::Get()->GetDevice().Get(),
-	                                                    queue->GetCommandList().Get(),
-	                                                    256,
-	                                                    256,
-	                                                    0.25f,
-	                                                    0.03f,
-	                                                    2.0f,
-	                                                    0.2f);
+	Water = OEngine::Get()->BuildRenderObject<OWaterRenderObject>();
 	BuildRenderItems();
 	return true;
 }
@@ -25,58 +18,6 @@ void OCubeMapTest::OnUpdate(const UpdateEventArgs& Event)
 {
 	OTest::OnUpdate(Event);
 	AnimateSkull(Event);
-}
-
-void OCubeMapTest::DrawSceneToCubeMap()
-{
-	auto cmdList = OEngine::Get()->GetCommandQueue()->GetCommandList();
-
-	auto cubeMap = OEngine::Get()->GetCubeRenderTarget();
-
-	cmdList->SetGraphicsRootDescriptorTable(5, OEngine::Get()->GetSRVDescHandleForTexture(FindTextureByName("grasscube1024")));
-	cubeMap->SetViewport(OEngine::Get()->GetCommandQueue()->GetCommandList().Get());
-
-	Utils::ResourceBarrier(cmdList.Get(), cubeMap->GetResource(), D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_RENDER_TARGET);
-	UINT passCBByteSize = Utils::CalcBufferByteSize(sizeof(SPassConstants));
-	auto resource = OEngine::Get()->CurrentFrameResources->PassCB->GetResource()->Resource->GetGPUVirtualAddress();
-	for (size_t i = 0; i < cubeMap->GetNumRTVRequired(); i++)
-	{
-		auto& rtv = cubeMap->GetRTVHandle()[i];
-		auto& dsv = cubeMap->GetDSVHandle();
-		CHECK(rtv.CPUHandle.ptr != 0);
-		CHECK(dsv.CPUHandle.ptr != 0);
-
-		cmdList->ClearRenderTargetView(rtv.CPUHandle, DirectX::Colors::LightSteelBlue, 0, nullptr);
-		cmdList->ClearDepthStencilView(dsv.CPUHandle, D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
-		cmdList->OMSetRenderTargets(1, &rtv.CPUHandle, true, &dsv.CPUHandle);
-
-		cmdList->SetGraphicsRootConstantBufferView(2, resource + (i + 1) * passCBByteSize);
-
-		OEngine::Get()->DrawRenderItems(SPSOType::Opaque, SRenderLayer::Opaque);
-		OEngine::Get()->DrawRenderItems(SPSOType::WavesRender, SRenderLayer::Waves);
-		OEngine::Get()->DrawRenderItems(SPSOType::Sky, SRenderLayer::Sky);
-	}
-	Utils::ResourceBarrier(cmdList.Get(), cubeMap->GetResource(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_GENERIC_READ);
-}
-
-void OCubeMapTest::OnRender(const UpdateEventArgs& Event)
-{
-	auto cmdList = OEngine::Get()->GetCommandQueue()->GetCommandList();
-	cmdList->SetGraphicsRootDescriptorTable(4, Waves->GetDisplacementMapHandle());
-
-	DrawSceneToCubeMap();
-
-	OEngine::Get()->SetWindowViewport();
-	GetEngine()->PrepareRenderTarget();
-	cmdList->SetGraphicsRootConstantBufferView(2,  OEngine::Get()->CurrentFrameResources->PassCB->GetGPUAddress());
-	cmdList->SetGraphicsRootDescriptorTable(5, OEngine::Get()->GetCubeRenderTarget()->GetSRVHandle().GPUHandle);
-	OEngine::Get()->DrawRenderItems(SPSOType::Opaque, SRenderLayer::OpaqueDynamicReflections);
-
-	cmdList->SetGraphicsRootDescriptorTable(5, OEngine::Get()->GetSRVDescHandleForTexture(FindTextureByName("grasscube1024")));
-
-	OEngine::Get()->DrawRenderItems(SPSOType::Opaque, SRenderLayer::Opaque);
-	OEngine::Get()->DrawRenderItems(SPSOType::WavesRender, SRenderLayer::Waves);
-	OEngine::Get()->DrawRenderItems(SPSOType::Sky, SRenderLayer::Sky);
 }
 
 void OCubeMapTest::AnimateSkull(const UpdateEventArgs& Event)
@@ -101,7 +42,7 @@ void OCubeMapTest::BuildRenderItems()
 
 	auto& skull = CreateRenderItem(SRenderLayer::Opaque,
 	                               "Skull",
-	                               "Resources/Models/skull.txt",
+	                               WStringToUTF8(OApplication::Get()->GetResourcePath(L"Resources/Models/skull.txt")),
 	                               EParserType::Custom,
 	                               ETextureMapType::Spherical,
 	                               SRenderItemParams{ FindMaterial("White") });
@@ -183,11 +124,5 @@ void OCubeMapTest::BuildRenderItems()
 	params.Pickable = false;
 	params.MaterialParams.Material = FindMaterial("Water01");
 
-	CreateGridRenderItem(SRenderLayer::Water,
-	                     "Water",
-	                     160,
-	                     160,
-	                     300,
-	                     300,
-	                     params);
+
 }

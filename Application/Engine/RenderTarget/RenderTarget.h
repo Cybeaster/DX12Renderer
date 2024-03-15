@@ -33,8 +33,8 @@ public:
 
 	virtual SResourceInfo* GetResource() = 0;
 	uint32_t GetNumSRVRequired() const override;
-	uint32_t GetNumRTVRequired() override;
-	uint32_t GetNumDSVRequired() override;
+	uint32_t GetNumRTVRequired() const override;
+	uint32_t GetNumDSVRequired() const override;
 	void CopyTo(ORenderTargetBase* Dest, const OCommandQueue* CommandQueue);
 	virtual SDescriptorPair GetSRV(uint32_t SubtargetIdx = 0) const;
 	virtual SDescriptorPair GetRTV(uint32_t SubtargetIdx = 0) const;
@@ -47,7 +47,10 @@ public:
 	virtual void PrepareRenderTarget(ID3D12GraphicsCommandList* CommandList, uint32_t SubtargetIdx = 0);
 
 	void UnsetRenderTarget(OCommandQueue* CommandQueue);
-
+	wstring GetName() override
+	{
+		return Name;
+	}
 protected:
 	D3D12_VIEWPORT Viewport;
 	D3D12_RECT ScissorRect;
@@ -58,6 +61,7 @@ protected:
 
 	ID3D12Device* Device = nullptr;
 	unordered_set<uint32_t> PreparedTaregts;
+	wstring Name = L"";
 };
 
 class OOffscreenTexture : public ORenderTargetBase
@@ -74,16 +78,12 @@ public:
 
 	SDescriptorPair GetSRV(uint32_t SubtargetIdx = 0) const override { return SRVHandle; }
 	SDescriptorPair GetRTV(uint32_t SubtargetIdx = 0) const override { return RTVHandle; }
-	uint32_t GetNumRTVRequired() override { return 1; }
+	uint32_t GetNumRTVRequired() const override { return 1; }
 	uint32_t GetNumSRVRequired() const override { return 1; }
 
 	void BuildDescriptors(IDescriptor* Descriptor) override;
 	void OnResize(UINT NewWidth, UINT NewHeight);
 	void InitRenderObject() override;
-	string GetName() override
-	{
-		return "OffscreenTexture";
-	}
 
 protected:
 	void BuildDescriptors() override;

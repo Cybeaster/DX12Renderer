@@ -1,5 +1,6 @@
 #pragma once
 #include "ConfigReader.h"
+#include "Texture.h"
 
 struct STexture;
 class OTexturesParser : public OConfigReader
@@ -14,4 +15,6 @@ public:
 	void AddTexture(STexture* Texture);
 	void AddTextures(const vector<STexture*>& Textures);
 	vector<STexture*> LoadTextures();
+private:
+	ETextureType GetTextureType(const string& Type);
 };

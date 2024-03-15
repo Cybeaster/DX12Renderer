@@ -25,10 +25,6 @@ public:
 	{
 		bEnabled = bIsEnabled;
 	}
-	string GetName() override
-	{
-		return "SobelFilter";
-	}
 
 	bool GetIsEnabled() const
 	{

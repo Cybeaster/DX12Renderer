@@ -103,13 +103,6 @@ void OEngine::PostInitialize()
 	UIManager = BuildRenderObject<OUIManager>();
 	BuildFilters();
 	BuildOffscreenRT();
-	BuildShadersAndInputLayouts();
-	BuildDefaultRootSignature();
-	BuildPostProcessRootSignature();
-	BuildWavesRootSignature();
-	BuildBlurRootSignature();
-	BuildBilateralBlurRootSignature();
-	BuildPSOs();
 }
 
 void OEngine::BuildFilters()
@@ -173,7 +166,7 @@ void OEngine::DrawRenderItems(string PSOType, string RenderLayer)
 	}
 }
 
-void OEngine::DrawRenderItems(SShaderPipelineDesc* Desc, const string& RenderLayer)
+void OEngine::DrawRenderItems(SPSODescriptionBase* Desc, const string& RenderLayer)
 {
 	auto renderItems = GetRenderItems(RenderLayer);
 	DrawRenderItemsImpl(Desc, renderItems);
@@ -223,7 +216,7 @@ void OEngine::UpdateMaterialCB() const
 	}
 }
 
-void OEngine::DrawRenderItemsImpl(SShaderPipelineDesc* Description, const vector<ORenderItem*>& RenderItems)
+void OEngine::DrawRenderItemsImpl(SPSODescriptionBase* Description, const vector<ORenderItem*>& RenderItems)
 {
 	auto cmd = GetCommandQueue()->GetCommandList();
 	for (size_t i = 0; i < RenderItems.size(); i++)
@@ -238,8 +231,7 @@ void OEngine::DrawRenderItemsImpl(SShaderPipelineDesc* Description, const vector
 			renderItem->BindResources(cmd.Get(), Engine->CurrentFrameResources);
 			auto instanceBuffer = Engine->CurrentFrameResources->InstanceBuffer->GetResource();
 			auto location = instanceBuffer->Resource->GetGPUVirtualAddress() + renderItem->StartInstanceLocation * sizeof(SInstanceData);
-			// cmd->SetGraphicsRootShaderResourceView(1, location);
-			Description->SetResource("gInstanceData", location, cmd.Get());
+			GetCommandQueue()->SetResource("gInstanceData", location,Description);
 			cmd->DrawIndexedInstanced(
 			    renderItem->IndexCount,
 			    renderItem->VisibleInstanceCount,
@@ -975,7 +967,7 @@ void OEngine::BuildDescriptorHeap()
 	{
 		auto resourceSRV = texture->GetSRVDesc();
 		auto pair = ObjectDescriptors.SRVHandle.Offset();
-		Device->CreateShaderResourceView(texture->Resource.Get(), &resourceSRV, pair.CPUHandle);
+		Device->CreateShaderResourceView(texture->Resource.Resource.Get(), &resourceSRV, pair.CPUHandle);
 		texture->HeapIdx = texturesOffset;
 		texturesOffset++;
 	}
@@ -1091,40 +1083,6 @@ void OEngine::BuildShadersAndInputLayouts()
 	constexpr D3D_SHADER_MACRO wavesDefines[] = {
 		"DISPLACEMENT_MAP", "1", NULL, NULL
 	};
-
-	BuildGSShader(L"Shaders/Geosphere.hlsl", SShaderTypes::GSIcosahedron);
-	BuildPSShader(L"Shaders/Geosphere.hlsl", SShaderTypes::PSIcosahedron);
-	BuildVSShader(L"Shaders/Geosphere.hlsl", SShaderTypes::VSIcosahedron);
-
-	BuildVSShader(L"Shaders/BaseShader.hlsl", SShaderTypes::VSBaseShader);
-	BuildPSShader(L"Shaders/BaseShader.hlsl", SShaderTypes::PSOpaque, fogDefines);
-	BuildPSShader(L"Shaders/BaseShader.hlsl", SShaderTypes::PSAlphaTested, alphaTestDefines);
-
-	BuildShader(L"Shaders/BaseShader.hlsl", SShaderTypes::VSWaves, EShaderLevel::VertexShader, "VS", wavesDefines);
-
-	BuildVSShader(L"Shaders/TreeSprite.hlsl", SShaderTypes::VSTreeSprite);
-	BuildGSShader(L"Shaders/TreeSprite.hlsl", SShaderTypes::GSTreeSprite);
-	BuildPSShader(L"Shaders/TreeSprite.hlsl", SShaderTypes::PSTreeSprite);
-
-	BuildShader(L"Shaders/Blur.hlsl", SShaderTypes::CSHorizontalBlur, EShaderLevel::ComputeShader, "HorzBlurCS");
-	BuildShader(L"Shaders/Blur.hlsl", SShaderTypes::CSVerticalBlur, EShaderLevel::ComputeShader, "VertBlurCS");
-
-	BuildShader(L"Shaders/Sobel.hlsl", SShaderTypes::CSSobelFilter, EShaderLevel::ComputeShader, "SobelCS");
-
-	BuildShader(L"Shaders/Composite.hlsl", SShaderTypes::VSComposite, EShaderLevel::VertexShader);
-	BuildShader(L"Shaders/Composite.hlsl", SShaderTypes::PSComposite, EShaderLevel::PixelShader);
-
-	BuildShader(L"Shaders/WaveSimulation.hlsl", SShaderTypes::CSWavesDisturb, EShaderLevel::ComputeShader, "DisturbWavesCS");
-	BuildShader(L"Shaders/WaveSimulation.hlsl", SShaderTypes::CSWavesUpdate, EShaderLevel::ComputeShader, "UpdateWavesCS");
-
-	BuildShader(L"Shaders/BilateralBlur.hlsl", SShaderTypes::CSBilateralBlur, EShaderLevel::ComputeShader, "BilateralBlur");
-
-	BuildShader(L"Shaders/BezierTesselation.hlsl", SShaderTypes::VSTesselation, EShaderLevel::VertexShader);
-	BuildShader(L"Shaders/BezierTesselation.hlsl", SShaderTypes::HSTesselation, EShaderLevel::HullShader);
-	BuildShader(L"Shaders/BezierTesselation.hlsl", SShaderTypes::DSTesselation, EShaderLevel::DomainShader);
-	BuildShader(L"Shaders/BezierTesselation.hlsl", SShaderTypes::PSTesselation, EShaderLevel::PixelShader);
-	BuildShader(L"Shaders/Sky.hlsl", SShaderTypes::VSSky, EShaderLevel::VertexShader);
-	BuildShader(L"Shaders/Sky.hlsl", SShaderTypes::PSSky, EShaderLevel::PixelShader);
 
 	InputLayout = {
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },

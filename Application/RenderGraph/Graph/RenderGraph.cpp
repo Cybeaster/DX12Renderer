@@ -40,6 +40,7 @@ void ORenderGraph::Execute()
 		auto currentNode = Head;
 		engine->GetWindow()->SetViewport(CommandQueue->GetCommandList().Get());
 		ORenderTargetBase* texture = OEngine::Get()->GetOffscreenRT();
+		CommandQueue->SetRenderTarget(texture);
 		while (currentNode != nullptr)
 		{
 			LOG(Render, Log, "Executing node: {}", TEXT(currentNode->GetNodeInfo().Name));

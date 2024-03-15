@@ -83,4 +83,3 @@ struct SLitEnum
 		return static_cast<EnumType>(-1);                                                           \
 	}
 
-ENUM(ETextureType, Diffuse, Normal, Specular, Roughness, Metallic, AmbientOcclusion, Emissive, Opacity, Height, Displacement, Lightmap, Reflection, BaseColor, Unknown)

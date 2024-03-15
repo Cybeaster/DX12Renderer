@@ -54,9 +54,9 @@ public:
 
 	void Disturb(ID3D12RootSignature* RootSignature, ID3D12PipelineState* PSO, UINT I, UINT J, float Magnitude);
 	void Update(const UpdateEventArgs& Event) override;
-	string GetName() override
+	wstring GetName() override
 	{
-		return "GPUWave";
+		return Name;
 	}
 
 private:
@@ -64,7 +64,7 @@ private:
 
 	UINT NumRows;
 	UINT NumCols;
-
+	wstring Name = L"GPUWave";
 	UINT VertexCount;
 	UINT TriangleCount;
 

@@ -5,6 +5,7 @@
 OSobelFilter::OSobelFilter(ID3D12Device* Device, OCommandQueue* Other, UINT Width, UINT Height, DXGI_FORMAT Format)
     : OFilterBase(Device, Other, Width, Height, Format)
 {
+	FilterName = L"SobelFilter";
 }
 
 CD3DX12_GPU_DESCRIPTOR_HANDLE OSobelFilter::OutputSRV() const

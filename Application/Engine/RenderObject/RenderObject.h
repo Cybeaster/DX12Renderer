@@ -146,15 +146,15 @@ public:
 	virtual ~IRenderObject() = default;
 	virtual void BuildDescriptors(IDescriptor* Descriptor){};
 	virtual void InitRenderObject(){};
-	virtual uint32_t GetNumSRVRequired() const = 0;
-	virtual uint32_t GetNumRTVRequired() { return 0; }
-	virtual uint32_t GetNumDSVRequired() { return 0; }
-	virtual uint32_t GetNumPassesRequired() { return 0; }
+	virtual uint32_t GetNumSRVRequired() const {return 0;}
+	virtual uint32_t GetNumRTVRequired() const { return 0; }
+	virtual uint32_t GetNumDSVRequired() const { return 0; }
+	virtual uint32_t GetNumPassesRequired() const { return 0; }
 	virtual void UpdatePass(const SPassConstantsData& Data) {}
 	virtual void Update(const UpdateEventArgs& Event) {}
 	virtual TUUID GetID() { return {}; }
 	virtual void SetID(TUUID ID) {}
-	virtual string GetName() { return { "UNIMPLEMENTED" }; }
+	virtual wstring GetName() { return { L"UNIMPLEMENTED" }; }
 };
 
 class ORenderObjectBase : public IRenderObject

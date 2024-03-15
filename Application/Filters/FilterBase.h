@@ -23,7 +23,10 @@ public:
 	}
 
 	virtual void OnResize(UINT NewWidth, UINT NewHeight);
-
+	wstring GetName() override
+	{
+		return FilterName;
+	}
 protected:
 	virtual void BuildDescriptors() const = 0;
 	virtual void BuildResource() = 0;
@@ -33,6 +36,7 @@ protected:
 	uint32_t Width = 0;
 	uint32_t Height = 0;
 	DXGI_FORMAT Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	wstring FilterName;
 };
 
 inline void OFilterBase::InitRenderObject()

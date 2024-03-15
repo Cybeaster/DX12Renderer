@@ -9,6 +9,7 @@ OBilateralBlurFilter::OBilateralBlurFilter(ID3D12Device* Device, OCommandQueue* 
 {
 	BlurBuffer = OUploadBuffer<SBilateralBlur>::Create(Device, 1, true, this);
 	BufferConstants = OUploadBuffer<SBufferConstants>::Create(Device, 1, true, this);
+	FilterName = L"BilateralBlurFilter";
 }
 
 void OBilateralBlurFilter::BuildDescriptors(IDescriptor* Descriptor)

@@ -132,11 +132,10 @@ public:
 	void ResetBuffers();
 	void SetCameraLens();
 
-	uint32_t GetNumDSVRequired() override;
-	uint32_t GetNumRTVRequired() override;
+	uint32_t GetNumDSVRequired() const override;
+	uint32_t GetNumRTVRequired() const override;
 	SDescriptorPair GetRTV(uint32_t SubtargetIdx = 0) const override;
 	SDescriptorPair GetDSV(uint32_t SubtargetIdx = 0) const override;
-	string GetName() override;
 	SResourceInfo* GetResource() override;
 
 protected:

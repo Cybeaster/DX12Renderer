@@ -7,6 +7,7 @@ OBlurFilter::OBlurFilter(ID3D12Device* Device, OCommandQueue* Other, UINT Width,
     : OFilterBase(Device, Other, Width, Height, Format)
 {
 	Buffer = make_unique<OUploadBuffer<SConstantBlurSettings>>(Device, 1, true, this);
+	FilterName = L"BlurFilter";
 }
 
 void OBlurFilter::OutputTo(SResourceInfo* Destination)

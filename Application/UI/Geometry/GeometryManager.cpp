@@ -48,7 +48,7 @@ void OGeometryManagerWidget::InitWidget()
 	PickedRenderItemWidget = MakeWidget<OPickedRenderItemWidget>();
 	for (auto& layer : *RenderLayers)
 	{
-		if (layer.first == "Opaque" || layer.first == "Transparent" || layer.first == "Sky")
+		if (layer.first == "Opaque" || layer.first == "Transparent" || layer.first == "Sky" || layer.first == "Water")
 		{
 			for (auto item : layer.second)
 			{

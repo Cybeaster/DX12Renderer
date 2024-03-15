@@ -685,11 +685,11 @@
     },
     {
       "Name": "Water",
-      "RootSignature": "BaseShader",
+      "RootSignature": "Water",
       "Type": "Graphics",
       "ShaderPipeline": {
-        "VertexShader": "BaseShader",
-        "PixelShader": "BaseShader"
+        "VertexShader": "Water",
+        "PixelShader": "Water"
       },
       "SampleMask": "0xffffffff",
       "PrimitiveTopologyType": "Triangle",

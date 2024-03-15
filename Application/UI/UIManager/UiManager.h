@@ -31,15 +31,14 @@ public:
 	void PostInputUpdate();
 
 	bool IsInFocus() override;
-	string GetName() override
+	wstring GetName() override
 	{
-		return "UIManager";
+		return Name;
 	}
-
 private:
 	bool bIsInFocus = false;
 	ImGuiIO* IO = nullptr;
-
+	wstring Name = L"UI Manager";
 	float MangerWidth = 400;
 	float MangerHeight = 800;
 };

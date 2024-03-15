@@ -17,16 +17,18 @@ struct STextureViewType
 	RENDER_TYPE(TextureCube);
 };
 
+ENUM(ETextureType, Diffuse, Normal,Height, Occlusion, Roughness)
+
 struct STexture
 {
 	virtual ~STexture() = default;
 	string Name;
 	wstring FileName;
 
-	ComPtr<ID3D12Resource> Resource = nullptr;
-	ComPtr<ID3D12Resource> UploadHeap = nullptr;
+	SResourceInfo Resource ;
+	SResourceInfo UploadHeap;
 	string ViewType = STextureViewType::Texture2D;
 	int64_t HeapIdx = -1;
-
+	ETextureType Type = ETextureType::Diffuse;
 	virtual D3D12_SHADER_RESOURCE_VIEW_DESC GetSRVDesc() const;
 };

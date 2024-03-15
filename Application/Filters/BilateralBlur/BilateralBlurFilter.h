@@ -45,10 +45,7 @@ public:
 	{
 		BlurCount = Value;
 	}
-	string GetName() override
-	{
-		return "BilateralBlur";
-	}
+
 
 private:
 	SDescriptorPair BlurOutputSrvHandle;

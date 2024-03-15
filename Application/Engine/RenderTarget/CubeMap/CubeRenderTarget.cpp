@@ -6,6 +6,7 @@
 OCubeRenderTarget::OCubeRenderTarget(ID3D12Device* Device, int Width, int Height, DXGI_FORMAT Format, const DirectX::XMUINT2 Res)
     : ORenderTargetBase(Device, Width, Height, Format), Resolution(Res)
 {
+	Name = L"CubeRenderTarget";
 	BuildViewport();
 }
 
@@ -15,7 +16,7 @@ OCubeRenderTarget::OCubeRenderTarget(const SRenderTargetParams& Params, const Di
 	BuildViewport();
 }
 
-uint32_t OCubeRenderTarget::GetNumPassesRequired()
+uint32_t OCubeRenderTarget::GetNumPassesRequired() const
 {
 	return 6;
 }
@@ -74,12 +75,12 @@ void OCubeRenderTarget::BuildDescriptors(IDescriptor* Descriptor)
 	BuildDepthStencilBuffer();
 }
 
-uint32_t OCubeRenderTarget::GetNumRTVRequired()
+uint32_t OCubeRenderTarget::GetNumRTVRequired() const
 {
 	return 6;
 }
 
-uint32_t OCubeRenderTarget::GetNumDSVRequired()
+uint32_t OCubeRenderTarget::GetNumDSVRequired() const
 {
 	return 1;
 }

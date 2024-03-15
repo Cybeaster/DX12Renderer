@@ -6,14 +6,11 @@ class ODynamicCubeMapRenderTarget final : public OCubeRenderTarget
 {
 public:
 	ODynamicCubeMapRenderTarget(const SRenderTargetParams& Params, DirectX::XMFLOAT3 Center, const DirectX::XMUINT2& Res)
-	    : OCubeRenderTarget(Params, Res), Position(Center) {}
+	    : OCubeRenderTarget(Params, Res), Position(Center) {Name = L"DynamicCubeMap";}
 
 	void InitRenderObject() override;
 	void UpdatePass(const SPassConstantsData& Data) override;
-	string GetName() override
-	{
-		return "DynamicCubeMapTarget";
-	}
+
 	D3D12_GPU_VIRTUAL_ADDRESS GetPassConstantAddresss(int Index) const //TODO propagate to base class
 	{
 		auto& pass = PassConstants[Index];

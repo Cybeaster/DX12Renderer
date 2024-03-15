@@ -184,6 +184,8 @@ set(SRC_FILES
         Application/RenderGraph/Nodes/DefaultNode/DefaultRenderNode.h
         Application/RenderGraph/Nodes/WaterNode/WaterNode.cpp
         Application/RenderGraph/Nodes/WaterNode/WaterNode.h
+        Objects/Geometry/Water/Water.cpp
+        Objects/Geometry/Water/Water.h
 )
 
 set(DXCOMPILER_PATH_DLL ${CMAKE_SOURCE_DIR}/Externals/directx/Compiler/bin)
@@ -209,14 +211,6 @@ if (MSVC)
             )
     add_compile_options(/wd4996)
 endif ()
-
-add_custom_command(TARGET DXRenderer POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/Shaders $<TARGET_FILE_DIR:DXRenderer>/Shaders)
-
-add_custom_command(TARGET DXRenderer POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/Resources $<TARGET_FILE_DIR:DXRenderer>/Resources/)
 
 include_directories(IMGUI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Externals/imgui)
 include_directories(IMGUI_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Externals/directx/Compiler/inc)

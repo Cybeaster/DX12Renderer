@@ -1,6 +1,7 @@
 
 #include "Compiler.h"
 
+#include "Application.h"
 #include "Engine/Engine.h"
 #include "Engine/Shader/Shader.h"
 #include "Logger.h"
@@ -40,7 +41,7 @@ void OShaderCompiler::SetCompilationArgs(const SShaderDefinition& Definition)
 		DXC_ARG_WARNINGS_ARE_ERRORS,
 		DXC_ARG_ALL_RESOURCES_BOUND,
 		L"-I",
-		L"Shaders/",
+		OApplication::Get()->GetShadersFolder().c_str(),
 	};
 
 	if constexpr (false)

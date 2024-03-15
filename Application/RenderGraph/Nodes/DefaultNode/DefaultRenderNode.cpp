@@ -23,6 +23,6 @@ void ODefaultRenderNode::Initialize(const SNodeInfo& OtherNodeInfo, OCommandQueu
 
 ORenderTargetBase* ODefaultRenderNode::Execute(ORenderTargetBase* RenderTarget)
 {
-	OEngine::Get()->DrawRenderItems(PSO->RootSignature.get(), GetNodeInfo().RenderLayer);
+	OEngine::Get()->DrawRenderItems(PSO, GetNodeInfo().RenderLayer);
 	return RenderTarget;
 }

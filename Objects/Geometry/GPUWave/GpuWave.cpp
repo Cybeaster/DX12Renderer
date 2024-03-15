@@ -196,7 +196,7 @@ void OGPUWave::Update(const UpdateEventArgs& Event)
 		int j = Utils::Math::Random(4, GetColumnCount() - 5);
 		float r = Utils::Math::Random(1.f, 2.f);
 
-		Disturb(wavesRootSignature, engine->GetPSO(SPSOType::WavesDisturb).Get(), i, j, r);
+		//Disturb(wavesRootSignature, engine->GetPSO(SPSOType::WavesDisturb).Get(), i, j, r);
 	}
-	Update(Event.Timer, wavesRootSignature, engine->GetPSO(SPSOType::WavesUpdate).Get());
+	//Update(Event.Timer, wavesRootSignature, engine->GetPSO(SPSOType::WavesUpdate).Get());
 }

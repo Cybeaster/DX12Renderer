@@ -12,6 +12,7 @@ using namespace Microsoft::WRL;
 OWindow::OWindow(HWND hWnd, const SWindowInfo& _WindowInfo)
     : ORenderTargetBase(WindowInfo.ClientWidth, WindowInfo.ClientHeight), Hwnd(hWnd), WindowInfo{ _WindowInfo }
 {
+	Name = WindowInfo.Name;
 }
 
 void OWindow::InitRenderObject()
@@ -375,12 +376,12 @@ void OWindow::SetCameraLens()
 		Camera->SetLens(0.25 * DirectX::XM_PI, GetAspectRatio(), 1.0f, 1000.0f);
 	}
 }
-uint32_t OWindow::GetNumDSVRequired()
+uint32_t OWindow::GetNumDSVRequired() const
 {
 	return 1;
 }
 
-uint32_t OWindow::GetNumRTVRequired()
+uint32_t OWindow::GetNumRTVRequired() const
 {
 	return 3;
 }
@@ -398,10 +399,6 @@ SDescriptorPair OWindow::GetDSV(uint32_t SubtargetIdx) const
 	return pair; //TODO - return the correct DSV
 }
 
-string OWindow::GetName()
-{
-	return "Window";
-}
 
 SResourceInfo* OWindow::GetResource()
 {
@@ -490,6 +487,7 @@ void OWindow::UpdateRenderTargetViews()
 		device->CreateRenderTargetView(BackBuffers[i].Resource.Get(), nullptr, rtvHandle);
 		BackBuffers[i].CurrentState = D3D12_RESOURCE_STATE_PRESENT;
 		BackBuffers[i].Context = this;
+		BackBuffers[i].Resource->SetName(Name.c_str());
 		rtvHandle.Offset(RTVDescriptorSize);
 	}
 }

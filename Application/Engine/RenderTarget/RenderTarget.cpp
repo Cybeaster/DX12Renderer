@@ -17,12 +17,12 @@ uint32_t ORenderTargetBase::GetNumSRVRequired() const
 	return 0;
 }
 
-uint32_t ORenderTargetBase::GetNumRTVRequired()
+uint32_t ORenderTargetBase::GetNumRTVRequired() const
 {
 	return 0;
 }
 
-uint32_t ORenderTargetBase::GetNumDSVRequired()
+uint32_t ORenderTargetBase::GetNumDSVRequired() const
 {
 	return 0;
 }
@@ -93,6 +93,7 @@ void ORenderTargetBase::SetID(TUUID Other)
 OOffscreenTexture::OOffscreenTexture(ID3D12Device* Device, UINT Width, UINT Height, DXGI_FORMAT Format)
     : ORenderTargetBase(Device, Width, Height, Format)
 {
+	Name = L"OffscreenTexture";
 }
 OOffscreenTexture::~OOffscreenTexture()
 {

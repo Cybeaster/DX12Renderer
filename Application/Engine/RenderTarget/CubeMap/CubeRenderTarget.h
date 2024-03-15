@@ -16,8 +16,8 @@ public:
 
 	void BuildDescriptors(IDescriptor* Descriptor) override;
 
-	uint32_t GetNumRTVRequired() override;
-	uint32_t GetNumDSVRequired() override;
+	uint32_t GetNumRTVRequired() const override;
+	uint32_t GetNumDSVRequired() const override;
 	uint32_t GetNumSRVRequired() const override;
 
 	SDescriptorPair GetDSV(uint32_t SubtargetIdx) const override;
@@ -26,12 +26,8 @@ public:
 	vector<SDescriptorPair>& GetRTVHandle() { return RTVHandle; }
 	SDescriptorPair& GetDSVHandle() { return DSVHandle; }
 	SDescriptorPair& GetSRVHandle() { return SRVHandle; }
-	uint32_t GetNumPassesRequired() override;
+	uint32_t GetNumPassesRequired() const override;
 	SResourceInfo* GetResource() override { return &RenderTarget; }
-	string GetName() override
-	{
-		return "CubeRenderTarget";
-	}
 
 protected:
 	DirectX::XMUINT2 Resolution;

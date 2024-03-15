@@ -31,37 +31,33 @@ VertexOut VS(VertexIn Vin, uint InstanceID
 	vout.MaterialIndex = matIndex;
 	MaterialData matData = gMaterialData[matIndex];
 
-#ifdef DISPLACEMENT_MAP
-	// Sample the displacement map using non-transformed [0,1]^2 tex-coords.
-	Vin.PosL.y += gDisplacementMap.SampleLevel(gsamLinearWrap, Vin.TexC, 1.0f).r;
+	// Output vertex attributes for interpolation across triangle.
+	float4 texC = mul(float4(Vin.TexC, 0.0f, 1.0f), texTransform);
+	vout.TexC = mul(texC, matData.MatTransform).xy;
 
-	// Estimate normal using finite difference.
-	float du = inst.DisplacementMapTexelSize.x;
-	float dv = inst.DisplacementMapTexelSize.y;
-	float l = gDisplacementMap.SampleLevel(gsamPointClamp, Vin.TexC - float2(du, 0.0f), 0.0f).r;
-	float r = gDisplacementMap.SampleLevel(gsamPointClamp, Vin.TexC + float2(du, 0.0f), 0.0f).r;
-	float t = gDisplacementMap.SampleLevel(gsamPointClamp, Vin.TexC - float2(0.0f, dv), 0.0f).r;
-	float b = gDisplacementMap.SampleLevel(gsamPointClamp, Vin.TexC + float2(0.0f, dv), 0.0f).r;
-	Vin.NormalL = normalize(float3(-r + l, 2.0f * inst.GridSpatialStep, b - t));
-#endif
-
-	// Transform to world space.
-
-	float4 posW = mul(float4(Vin.PosL, 1.0f), world);
-	vout.PosW = posW.xyz;
 
 	// Assumes nonuniform scaling; otherwise, need to use inverse-transpose of world matrix.
-
 	vout.NormalW = mul(Vin.NormalL, (float3x3)world);
-	vout.TangentW = mul(Vin.TangentU, (float3x3)world);
+
+	if (!IsTangentValid(Vin.TangentU))
+	{
+		vout.TangentW = float3(0.0f, 0.0f, 0.0f);
+	}
+	else
+	{
+		vout.TangentW = mul(Vin.TangentU, (float3x3)world);
+	}
+	Vin.PosL = ComputeHeightMaps(matData, vout.NormalW, vout.TangentW, vout.TexC, Vin.PosL);
+
+	// Transform to world space.
+	float4 posW = mul(float4(Vin.PosL, 1.0f), world);
+	vout.PosW = posW.xyz;
 
 
 	// Transform to homogeneous clip space.
 	vout.PosH = mul(posW, gViewProj);
 
-	// Output vertex attributes for interpolation across triangle.
-	float4 texC = mul(float4(Vin.TexC, 0.0f, 1.0f), texTransform);
-	vout.TexC = mul(texC, matData.MatTransform).xy;
+
 
 	return vout;
 }
@@ -85,9 +81,12 @@ float4 PS(VertexOut pin)
 	float4 normalMapSample = float4(0.f, 0.f, 1.0f, 1.0f);
 	pin.NormalW = normalize(pin.NormalW);
 
-	bumpedNormalW = ComputeNormalMaps(pin.NormalW, pin.TangentW, matData, pin.TexC, normalMapSample.a);
-	pin.PosW = ComputeHeightMaps(matData, pin.NormalW, pin.TangentW, pin.TexC, pin.PosW);
+	int normalMapIndex = matData.NormalMapIndex[0];
+	normalMapSample = gTextureMaps[normalMapIndex].Sample(gsamAnisotropicClamp, pin.TexC);
+	bumpedNormalW = NormalSampleToWorldSpace(normalMapSample.rgb, pin.NormalW, pin.TangentW);
+
 	diffuseAlbedo = ComputeDiffuseMaps(matData, diffuseAlbedo, pin.TexC);
+
 	// Vector from point being lit to eye.
 	float3 toEyeW = gEyePosW - pin.PosW;
 	float distToEye = length(toEyeW);

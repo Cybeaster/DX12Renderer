@@ -404,5 +404,10 @@ string OApplication::GetConfigPath(const string& Key) const
 wstring OApplication::GetResourcePath(const wstring& Resource) const
 {
 	return RootDirPath.GetWPath() + Resource;
-
+}
+const wstring& OApplication::GetShadersFolder() const
+{
+	static wstring ShadersFolder = L"";
+	ShadersFolder = RootDirPath.GetWPath() + L"Shaders/";
+	return ShadersFolder;
 }

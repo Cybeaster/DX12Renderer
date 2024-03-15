@@ -1,4 +1,5 @@
 #pragma once
+#include "Geometry/Water/Water.h"
 #include "Test/Test.h"
 
 class OGPUWave;
@@ -10,13 +11,11 @@ public:
 
 	bool Initialize() override;
 	void OnUpdate(const UpdateEventArgs& Event) override;
-	void OnRender(const UpdateEventArgs& Event) override;
 	void AnimateSkull(const UpdateEventArgs& Event);
 	void BuildRenderItems();
-	void DrawSceneToCubeMap();
 
 private:
-	OGPUWave* Waves = nullptr;
+	OWaterRenderObject* Water = nullptr;
 
 	SInstanceData* SkullRitem = nullptr;
 };

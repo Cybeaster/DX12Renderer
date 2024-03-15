@@ -57,7 +57,36 @@ vector<STexture*> OTexturesParser::LoadTextures()
 		tex->Name = val.get<string>("Name");
 		tex->FileName = UTF8ToWString(val.get<string>("Path"));
 		tex->ViewType = val.get<string>("ViewDimensions");
+		tex->Type = GetTextureType(GetAttribute(val,"Type"));
 		textures.push_back(tex);
 	}
 	return textures;
+}
+
+ETextureType OTexturesParser::GetTextureType(const string& Type)
+{
+	if (Type == "Diffuse")
+	{
+		return ETextureType::Diffuse;
+	}
+	 if (Type == "Normal")
+	{
+		return ETextureType::Normal;
+	}
+	 if (Type == "Roughness")
+	{
+		return ETextureType::Roughness;
+	}
+	 if (Type == "Height")
+	{
+		return ETextureType::Height;
+	}
+	if(Type == "Occlusion")
+	{
+		return ETextureType::Occlusion;
+	}
+
+	LOG(Config, Error, "Texture type not found! {}", TEXT(Type))
+	return ETextureType::Diffuse;
+
 }

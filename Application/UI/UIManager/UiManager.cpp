@@ -14,6 +14,7 @@
 
 void OUIManager::InitContext(ID3D12Device2* Device, HWND Hwnd, UINT NumFramesInLight, ID3D12DescriptorHeap* SRVDescriptorHeap, SRenderObjectDescriptor& OutDescriptor, OEngine* Engine)
 {
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	IO = &ImGui::GetIO();
